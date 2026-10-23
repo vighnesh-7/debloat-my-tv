@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FF000000">
+
+    <ImageView
+        android:id="@+id/screensaverWallpaper"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:contentDescription="@null" />
+
+    <!-- Dim so clock/date/greeting stay readable over the photo. -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#66000000" />
+
+    <!-- Ambient aerial aura / slow breathing background glow -->
+    <View
+        android:id="@+id/screensaverAmbient"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <!-- Top glass reflection sheen -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="240dp"
+        android:background="@drawable/glass_reflection" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingStart="64dp"
+        android:paddingEnd="64dp"
+        android:paddingTop="36dp"
+        android:paddingBottom="48dp">
+
+        <LinearLayout
+            android:id="@+id/screensaverLeftBlock"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/screensaverGreeting"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:textColor="#FFFFFFFF"
+                android:textSize="16sp"
+                android:fontFamily="@font/outfit"
+                android:fontVariationSettings="'wght' 600"
+                android:letterSpacing="0.16"
+                android:textAllCaps="true" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:baselineAligned="true">
+
+                <TextClock
+                    android:id="@+id/screensaverClock"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:format12Hour="h:mm"
+                    android:format24Hour="HH:mm"
+                    android:textColor="#FFFFFFFF"
+                    android:textSize="68sp"
+                    android:fontFamily="@font/outfit"
+                    android:fontVariationSettings="'wght' 600"
+                    android:letterSpacing="-0.03"
+                    android:includeFontPadding="false" />
+
+                <TextClock
+                    android:id="@+id/screensaverAmpm"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="6dp"
+                    android:layout_gravity="bottom"
+                    android:layout_marginBottom="10dp"
+                    android:format12Hour="a"
+                    android:format24Hour=""
+                    android:textColor="#FFFFFFFF"
+                    android:textSize="15sp"
+                    android:fontFamily="@font/outfit"
+                    android:fontVariationSettings="'wght' 600"
+                    android:letterSpacing="0.08"
+                    android:textAllCaps="true" />
+
+                <View
+                    android:layout_width="2dp"
+                    android:layout_height="28dp"
+                    android:layout_gravity="bottom"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="#4DFFFFFF" />
+
+                <TextClock
+                    android:id="@+id/screensaverDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom"
+                    android:layout_marginBottom="11dp"
+                    android:format12Hour="EEEE  d MMMM"
+                    android:format24Hour="EEEE  d MMMM"
+                    android:textColor="#FFFFFFFF"
+                    android:textSize="15sp"
+                    android:fontFamily="@font/outfit"
+                    android:fontVariationSettings="'wght' 600"
+                    android:letterSpacing="0.06"
+                    android:textAllCaps="true" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- Top right stats container (Vertical text orientation matching main) -->
+        <LinearLayout
+            android:id="@+id/screensaverStatsContainer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="8dp"
+            android:gravity="end"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/screensaverStatCpu"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/screensaverStatStorage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#FFFFFFFF"
+                android:textSize="14sp"
+                android:fontFamily="@font/outfit"
+                android:fontVariationSettings="'wght' 600"
+                android:letterSpacing="0.04"
+                android:text="Memory -- Free" />
+
+            <LinearLayout
+                android:id="@+id/screensaverUsbStack"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:gravity="end"
+                android:orientation="vertical"
+                android:visibility="gone" />
+        </LinearLayout>
+
+        <!-- Bottom center hint -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:textColor="#59FFFFFF"
+            android:textSize="12sp"
+            android:fontFamily="sans-serif"
+            android:textStyle="bold"
+            android:letterSpacing="0.12"
+            android:text="PRESS ANY BUTTON TO RESUME" />
+    </RelativeLayout>
+</FrameLayout>

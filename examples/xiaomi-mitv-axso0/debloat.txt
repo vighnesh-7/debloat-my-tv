@@ -1,0 +1,39 @@
+# Xiaomi MiTV-AXSO0 (dangal), Android 9 — packages DISABLED for user 0.
+# Apply one package per pm call. Live TV / HDMI / Play / keyboard / Bluetooth / Assistant /
+# Chromecast / firmware updates are intentionally NOT listed.
+#
+# Telemetry
+com.miui.tv.analytics
+com.xiaomi.statistic
+com.google.android.partnersetup
+com.google.android.feedback
+com.google.android.tv.bugreportsender
+
+# PatchWall / ads / promo rows — uninstall PatchWall APKs (user apps), do not merely disable
+# com.mitv.tvhome.atv
+# com.xm.webcontent
+com.xiaomi.android.tvsetup.partnercustomizer
+# FloatingFrame draws the USB mouse cursor (keep enabled)
+# com.xiaomi.floatingframe
+com.google.android.tungsten.setupwraith
+com.google.android.onetimeinitializer
+com.android.onetimeinitializer
+android.autoinstalls.config.xioami.dangal
+com.xiaomi.mitv.handbook
+com.xiaomo.tv.milegal
+com.google.android.tvrecommendations
+com.google.android.leanbacklauncher.recommendations
+
+# Background services not needed (Mi cast/Miracast off by user choice)
+com.xiaomi.mitv.smartshare
+com.mitv.milinkservice
+com.xiaomi.wfdsinkhelperservice
+com.xiaomi.mimusic2
+com.google.android.play.games
+com.mitv.dream
+com.google.android.backdrop
+com.android.settings.intelligence
+
+# PatchWall vendor stubs (also uninstall --user 0 / hide in setup.sh)
+com.mitv.tvhome.atv
+com.xm.webcontent

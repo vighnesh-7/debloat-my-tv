@@ -1,0 +1,257 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  tvOS layout:
+  Full screen black canvas. A top shelf with an ambient color bloom and large app title;
+  under that, a dock row of favourite apps; below the dock, the rest of the apps in a 4-column grid.
+  One GlassView highlight floats and springs between the tiles.
+-->
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FF000000"
+    android:clipChildren="false">
+
+    <!-- Ambient glow behind the hero title, tinted with the focused app's primary color. -->
+    <View
+        android:id="@+id/ambient"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:alpha="0" />
+
+    <!-- Subtle top glass reflection sheen -->
+    <View
+        android:id="@+id/specularReflect"
+        android:layout_width="match_parent"
+        android:layout_height="220dp"
+        android:background="@drawable/glass_reflection" />
+
+    <!-- Hero name kept in the tree but unused: hover labels are not shown. -->
+    <TextView
+        android:id="@+id/heroName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingStart="56dp"
+        android:paddingEnd="56dp"
+        android:paddingTop="26dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:id="@+id/leftBlock"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/greeting"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:textColor="#FFFFFFFF"
+                    android:textSize="18sp"
+                    android:fontFamily="@font/outfit"
+                    android:fontVariationSettings="'wght' 600"
+                    android:letterSpacing="0.16"
+                    android:textAllCaps="true" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:baselineAligned="true">
+
+                    <TextClock
+                        android:id="@+id/clock"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:format12Hour="h:mm"
+                        android:format24Hour="HH:mm"
+                        android:textColor="#FFFFFFFF"
+                        android:textSize="68sp"
+                        android:fontFamily="@font/outfit"
+                        android:fontVariationSettings="'wght' 600"
+                        android:letterSpacing="-0.03"
+                        android:includeFontPadding="false" />
+
+                    <TextClock
+                        android:id="@+id/ampm"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="6dp"
+                        android:layout_gravity="bottom"
+                        android:layout_marginBottom="10dp"
+                        android:format12Hour="a"
+                        android:format24Hour=""
+                        android:textColor="#FFFFFFFF"
+                        android:textSize="16sp"
+                        android:fontFamily="@font/outfit"
+                        android:fontVariationSettings="'wght' 600"
+                        android:letterSpacing="0.08"
+                        android:textAllCaps="true" />
+
+                    <View
+                        android:layout_width="2dp"
+                        android:layout_height="28dp"
+                        android:layout_gravity="bottom"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginEnd="10dp"
+                        android:layout_marginBottom="10dp"
+                        android:background="#4DFFFFFF" />
+
+                    <TextClock
+                        android:id="@+id/date"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom"
+                        android:layout_marginBottom="11dp"
+                        android:format12Hour="EEEE  d MMMM"
+                        android:format24Hour="EEEE  d MMMM"
+                        android:textColor="#FFFFFFFF"
+                        android:textSize="16sp"
+                        android:fontFamily="@font/outfit"
+                        android:fontVariationSettings="'wght' 600"
+                        android:letterSpacing="0.06"
+                        android:textAllCaps="true" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/rightBlock"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignBottom="@id/leftBlock"
+                android:layout_marginBottom="2dp"
+                android:paddingEnd="8dp"
+                android:gravity="end"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:id="@+id/topButtons"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/btnInputs"
+                        style="@style/TopButton"
+                        android:text="@string/inputs"
+                        android:drawableStart="@drawable/ic_input"
+                        android:nextFocusDown="@id/grid" />
+
+                    <TextView
+                        android:id="@+id/btnWifi"
+                        style="@style/TopButton"
+                        android:text="@string/wifi"
+                        android:drawableStart="@drawable/ic_wifi"
+                        android:nextFocusDown="@id/grid" />
+
+                    <TextView
+                        android:id="@+id/btnSettings"
+                        style="@style/TopButton"
+                        android:text="@string/settings"
+                        android:drawableStart="@drawable/ic_settings"
+                        android:nextFocusDown="@id/grid" />
+                </LinearLayout>
+
+                <!-- Memory free space, then USB detected when a stick is present. -->
+                <LinearLayout
+                    android:id="@+id/statsContainer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:minWidth="168dp"
+                    android:gravity="end"
+                    android:orientation="vertical"
+                    android:focusable="false"
+                    android:clickable="false">
+
+                    <TextView
+                        android:id="@+id/statCpu"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:visibility="gone" />
+
+                    <TextView
+                        android:id="@+id/statStorage"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="end"
+                        android:textColor="#FFFFFFFF"
+                        android:textSize="14sp"
+                        android:fontFamily="@font/outfit"
+                        android:fontVariationSettings="'wght' 600"
+                        android:letterSpacing="0.04"
+                        android:maxLines="1"
+                        android:text="Memory -- Free" />
+
+                    <LinearLayout
+                        android:id="@+id/usbStack"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="end"
+                        android:orientation="vertical"
+                        android:visibility="gone" />
+                </LinearLayout>
+            </LinearLayout>
+        </RelativeLayout>
+
+        <!-- The wrapper clips at the grid's edge; the grid itself must not clip so scaled tiles can overflow their cells. -->
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipChildren="true"
+            android:clipToPadding="true">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/grid"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:clipChildren="false"
+                android:clipToPadding="false"
+                android:descendantFocusability="afterDescendants"
+                android:paddingBottom="64dp" />
+        </FrameLayout>
+    </LinearLayout>
+
+    <!-- Drawn last so the hover pill sits above the dock band and tiles. -->
+    <com.gathin.tvhome.GlassView
+        android:id="@+id/glass"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:alpha="0"
+        android:clickable="false"
+        android:focusable="false"
+        android:elevation="24dp" />
+
+    <TextView
+        android:id="@+id/eventToast"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_marginEnd="28dp"
+        android:layout_marginBottom="28dp"
+        android:background="@drawable/event_toast_bg"
+        android:fontFamily="@font/outfit"
+        android:fontVariationSettings="'wght' 600"
+        android:paddingStart="18dp"
+        android:paddingTop="10dp"
+        android:paddingEnd="18dp"
+        android:paddingBottom="10dp"
+        android:textColor="#F2FFFFFF"
+        android:textSize="14sp"
+        android:alpha="0"
+        android:visibility="gone"
+        android:elevation="12dp" />
+</FrameLayout>
